@@ -9,6 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # web socket library
+  web_socket_channel: ^2.1.0
+
+  # Json Serializing
+  json_annotation: ^4.1.0
 
 dev_dependencies:
   flutter_test:
