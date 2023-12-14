@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:guiver_client/models/guiver_response.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart' as status;
 
 class GuiverLib {
   late final WebSocketChannel _guiverWebSocket; 
@@ -10,7 +11,9 @@ class GuiverLib {
   GuiverLib()
   { 
     _guiverWebSocket = WebSocketChannel.connect(Uri.parse("ws://localhost:7777"));
-    _guiverWebSocket.stream.listen((event) {
+    
+    _guiverWebSocket.stream.listen(
+      (event) {
         Iterable<MapEntry<StreamController<String>, String>> entries = controllers.entries;
         for (final entry in entries) {
           print("GUIVER STREAM: " + event);
@@ -20,7 +23,16 @@ class GuiverLib {
             entry.key.add(event);
           }
         }
-     });
+      },
+      onError: (error) {
+        print("Error " + error.toString());
+      },
+      onDone: () {
+        print("Connectin Lost");
+      }
+     );
+
+     
   }
 
   Stream<GuiverResponse> guiverStream(command)

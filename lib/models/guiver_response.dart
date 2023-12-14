@@ -18,5 +18,4 @@ class GuiverResponse {
   Map<String, dynamic> toJson(){
     return _$GuiverResponseToJson(this);
   } 
-    
 }

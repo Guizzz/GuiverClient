@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: RefreshButtons(
                     title: "Get Weather",
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.green,
                     onTap: widget.provider.getWeather,
                   ),
                 ),
