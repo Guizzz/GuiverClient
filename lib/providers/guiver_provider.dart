@@ -1,22 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:guiver_client/config/config.dart';
 import 'package:guiver_client/models/guiver_response.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
 
 class GuiverLib {
   late final WebSocketChannel _guiverWebSocket; 
-  var controllers = Map<StreamController<String>, String>(); // <StreamController<String>, <String>();
-
+  var connection_status = false;
+  var controllers = Map<StreamController<String>, String>();
   GuiverLib()
   { 
-    _guiverWebSocket = WebSocketChannel.connect(Uri.parse("ws://localhost:7777"));
-    
-    _guiverWebSocket.stream.listen(
+    _guiverWebSocket = WebSocketChannel.connect(Uri.parse("ws://${Config.GUIVER_SERVER_IP}:${Config.GUIVER_SERVER_PORT}"));
+    startConnecton();
+  }
+
+  void startConnecton()
+  {
+      _guiverWebSocket.stream.listen(
       (event) {
         Iterable<MapEntry<StreamController<String>, String>> entries = controllers.entries;
         for (final entry in entries) {
-          print("GUIVER STREAM: " + event);
+          print("GUIVER STREAM: $event");
           print('(${entry.key}, ${entry.value})');
           var jEvent = GuiverResponse.fromJson(jsonDecode(event));
           if (entry.value == jEvent.command) {
@@ -25,14 +29,25 @@ class GuiverLib {
         }
       },
       onError: (error) {
-        print("Error " + error.toString());
+        print("Error ${error.toString()}");
+        connection_status = false;
       },
       onDone: () {
         print("Connectin Lost");
+        connection_status = false;
       }
      );
+  
+  }
 
-     
+  Stream<String> connectionStatusStream()
+  {
+    StreamController<String> cont = StreamController<String>();
+    return cont.stream
+            .map<String>((value){
+                var resp = "Ciao";
+                return resp;
+              });
   }
 
   Stream<GuiverResponse> guiverStream(command)

@@ -25,10 +25,10 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
+                flex: 4,
                 child: GuiverDisplay(
                   guiverLib: widget.provider,
                 ),
-                flex: 4,
               ),
               Expanded(
                 flex: 1,
