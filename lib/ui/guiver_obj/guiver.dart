@@ -20,13 +20,19 @@ class Guiver extends StatelessWidget {
       child: StreamBuilder<GuiverResponse>(
         stream: stream,
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.none) {
+            return const Center(
+              child: Text('Error'),
+            );
+          }
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
           
-          if (snapshot.connectionState == ConnectionState.active) // && snapshot.hasData)
+          if (snapshot.connectionState == ConnectionState.active && snapshot.hasData)
           {
             return createObject(snapshot);
           }
