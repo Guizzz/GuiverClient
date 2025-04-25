@@ -1,5 +1,5 @@
-# guiver_client
+# Guiver Client
 
-A Ui client for Guiver project.
+A Flutter UI client for Guiver project.
 
 THIS IS IN WORK IN PROGRESS
