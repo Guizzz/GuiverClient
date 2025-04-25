@@ -1,3 +1,5 @@
 # guiver_client
 
-A new Flutter project.
+A Ui client for Guiver project.
+
+THIS IS IN WORK IN PROGRESS
