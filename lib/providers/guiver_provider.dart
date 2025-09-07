@@ -12,6 +12,9 @@ class GuiverLib {
   { 
     _guiverWebSocket = WebSocketChannel.connect(Uri.parse("ws://${Config.GUIVER_SERVER_IP}:${Config.GUIVER_SERVER_PORT}"));
     startConnecton();
+    getWeather();
+    getLedStatus();
+    getRelayStatus();
   }
 
   void startConnecton()
@@ -78,6 +81,20 @@ class GuiverLib {
   void getLedStatus()
   {
     print("INTO getLedStatus");
+    _guiverWebSocket.sink.add(
+      jsonEncode(
+            {
+                "type": "request", 
+                "command": "led_status",
+                "client_id": 123,
+            }
+      )
+    );
+  }
+
+  void getRelayStatus()
+  {
+    print("INTO getRelayStatus");
     _guiverWebSocket.sink.add(
       jsonEncode(
             {
